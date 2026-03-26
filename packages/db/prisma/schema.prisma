@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CourtStatus {
+  IDLE
+  LIVE
+  PAUSED
+}
+
+enum MatchStatus {
+  LIVE
+  FINISHED
+  CANCELLED
+}
+
+enum EventType {
+  START
+  POINT_A
+  POINT_B
+  UNDO
+  RESET
+  FINISH
+}
+
+model Court {
+  id        Int         @id @default(autoincrement())
+  name      String
+  slug      String      @unique
+  status    CourtStatus @default(IDLE)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  matches   Match[]
+}
+
+model Match {
+  id            String      @id @default(cuid())
+  courtId       Int
+  teamAName     String
+  teamBName     String
+
+  pointIndexA   Int         @default(0)
+  pointIndexB   Int         @default(0)
+  advantageTeam String?
+
+  gamesA        Int         @default(0)
+  gamesB        Int         @default(0)
+  setsA         Int         @default(0)
+  setsB         Int         @default(0)
+
+  tieBreak      Boolean     @default(false)
+  goldenPoint   Boolean     @default(true)
+  bestOfSets    Int         @default(3)
+
+  status        MatchStatus @default(LIVE)
+  startedAt     DateTime    @default(now())
+  endedAt       DateTime?
+
+  court         Court       @relation(fields: [courtId], references: [id], onDelete: Cascade)
+  events        MatchEvent[]
+
+  @@index([courtId, status])
+}
+
+model MatchEvent {
+  id        String    @id @default(cuid())
+  matchId   String
+  type      EventType
+  payload   Json?
+  createdAt DateTime  @default(now())
+
+  match     Match     @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@index([matchId, createdAt])
+}

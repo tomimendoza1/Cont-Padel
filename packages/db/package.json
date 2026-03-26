@@ -1,0 +1,23 @@
+{
+  "name": "@padel/db",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "generate": "prisma generate --config prisma.config.ts",
+    "migrate:dev": "prisma migrate dev --config prisma.config.ts",
+    "migrate:deploy": "prisma migrate deploy --config prisma.config.ts",
+    "studio": "prisma studio --config prisma.config.ts",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/adapter-neon": "^6.15.0",
+    "@prisma/client": "^6.15.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.1",
+    "prisma": "^6.15.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
