@@ -12,6 +12,6 @@
     "db:migrate": "npm run migrate:dev --workspace=@padel/db",
     "db:deploy": "npm run migrate:deploy --workspace=@padel/db",
     "db:seed": "npm run seed --workspace=@padel/db",
-    "postinstall": "npm run db:generate"
+    "postinstall": "echo skipping-postinstall"
   }
 }
