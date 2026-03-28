@@ -13,11 +13,11 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "latest"
+    "@prisma/client": "^7.6.0"
   },
   "devDependencies": {
-    "dotenv": "latest",
-    "prisma": "latest",
+    "dotenv": "^17.3.1",
+    "prisma": "^7.6.0",
     "tsx": "latest",
     "typescript": "latest"
   }
