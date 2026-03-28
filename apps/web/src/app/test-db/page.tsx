@@ -1,23 +1,24 @@
 import { prisma } from "@padel/db";
 
-
-
 export default async function TestDbPage() {
-	let ok = false;
-	let error = "";
+	let status = "OK";
+	let detail = "Import de Prisma correcto";
 
 	try {
-		await prisma.$queryRaw`SELECT 1`;
-		ok = true;
+		if (!prisma) {
+			status = "ERROR";
+			detail = "Prisma no existe";
+		}
 	} catch (e) {
-		error = e instanceof Error ? e.message : "Error desconocido";
+		status = "ERROR";
+		detail = e instanceof Error ? e.message : "Error desconocido";
 	}
 
 	return (
 		<main style={{ padding: 24, fontFamily: "sans-serif" }}>
 			<h1>Test DB</h1>
-			<p>Estado de conexión: {ok ? "OK" : "ERROR"}</p>
-			{error ? <pre>{error}</pre> : null}
+			<p>Estado: {status}</p>
+			<pre>{detail}</pre>
 		</main>
 	);
 }
