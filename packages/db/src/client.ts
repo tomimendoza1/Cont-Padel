@@ -1,13 +1,20 @@
-import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/client/client.js";
+
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+	throw new Error(
+		"Falta DATABASE_URL. Definila en apps/web/.env.local porque Next corre desde apps/web."
+	);
+}
 
 const globalForPrisma = globalThis as unknown as {
 	prisma?: PrismaClient;
 };
 
 const adapter = new PrismaPg({
-	connectionString: process.env.DATABASE_URL!,
+	connectionString: databaseUrl,
 });
 
 export const prisma =
