@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "npm run dev --workspace web",
     "dev:web": "npm run dev --workspace=@padel/web",
     "dev:api": "npm run dev --workspace=@padel/api",
     "db:generate": "npm run generate --workspace=@padel/db",

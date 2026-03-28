@@ -1,6 +1,7 @@
 import { prisma } from "@padel/db";
 
 
+
 export default async function TestDbPage() {
 	let ok = false;
 	let error = "";
